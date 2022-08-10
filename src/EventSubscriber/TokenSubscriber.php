@@ -28,7 +28,7 @@ class TokenSubscriber implements EventSubscriberInterface
         if ($controller instanceof TokenAuthenticatedController) {
             $headers = $event->getRequest()->headers;
             if (!($headers->has('X-UserName') && $headers->get('X-UserName') == $this->auth['name'] &&
-            $headers->has('X-Password') && $headers->get('X-Password') == hash('sha1', $this->auth['pass']))
+            $headers->has('X-Password') && hash('sha1', $headers->get('X-Password')) == hash('sha1', $this->auth['pass']))
             ) {
                 throw new UnauthorizedHttpException('', 'Unauthorized');
             }
